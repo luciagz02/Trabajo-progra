@@ -1,1 +1,35 @@
+#Pie: The pie method plot the datas given as a pie chart. 
+import matplotlib.pyplot as plt
+labels = 'Social science' ,  'Engineering and Architecture', 'arts' ,'Sanitary' , 'Science'
+percentage = [45.7 , 22.05 , 11.32 , 13.8, 7.13 ]
 
+fig1, ax1 = plt.subplots()
+ax1.pie(percentage,  labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+ax1.axis('equal')
+plt.title('Percentage of students studying a degree')
+plt.show()
+#Polar: The polar method plot polar coordinates in python
+import numpy as np
+
+import matplotlib.pyplot as plot
+
+ 
+
+fig  = plot.figure()
+
+fig.add_subplot(211, projection='polar')
+plot.title('Rose  of 6 petals ')
+rads    = np.arange(0, (2*np.pi), 0.01)
+
+ 
+
+a   = 2
+
+b   = 2
+
+k   = 6
+for radian in rads:
+
+    radius = a + (b*np.cos(k*radian))
+    plot.polar(radian, radius, '.')
