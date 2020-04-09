@@ -1,3 +1,32 @@
+import matplotlib.pyplot as plt
+
+###Plot()
+#Probably one of the simplest methods of matplotlib is plot(). You just have to provide two lists of numbers, and it will plot the first one as the x-axis and the second one as the y-axis:
+#The function ax specifies the width and height, and also the size of the plot.
+fig = plt.figure()
+ax = fig.add_axes([0,0,1,1])
+ax.plot([1,2,3,4],[1,8,27,64])
+plt.show()
+
+###Bar()
+#This method allows you to create a bar plot in the same way as plot().
+fig = plt.figure()
+ax = fig.add_axes([0,0,1,1])
+x = [1,2,3,4,5]
+y = [23,17,35,29,12]
+ax.bar(x,y)
+plt.show()
+
+###Set labels for the axis.
+#With this method we can name each axis. 
+#To show this, I will reuse my plot from plot().
+fig = plt.figure()
+ax = fig.add_axes([0,0,1,1])
+ax.plot([1,2,3,4],[1,8,27,64])
+plt.xlabel("X axis (for example, Days)")
+plt.ylabel("Y axis (for example, Euros)")
+plt.show()
+
 #Pie: The pie method plot the datas given as a pie chart. 
 import matplotlib.pyplot as plt
 labels = 'Social science' ,  'Engineering and Architecture', 'arts' ,'Sanitary' , 'Science'
