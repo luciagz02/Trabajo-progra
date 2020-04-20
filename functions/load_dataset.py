@@ -16,3 +16,33 @@ def load_dataset(filename="data.csv"):
             data.append(row)
         csv_file.close()
     return data
+def show_recommendations(recommendations, user):
+    """
+    This method shows the recomendations generated for a given user.
+
+    Parameters
+    ----------
+    recommendations : a list of recommend episodes
+        The list of recommendations.
+    user : string
+        The user id.
+
+    Returns
+    -------
+    None.
+
+    """
+    taste= input("Introduce what would you like to listen: ")
+    f=open('data.csv')
+    csv_f=csv.reader(f)
+    mylist=[]
+    for row in csv_f:
+        if mylist.count(row[9])==0:
+            mylist.append(row[9])
+    for row in csv_f:
+        if row[9]==taste:
+            print("What you are looking for is {} episode {}. ".format(row[7],row[8]))
+        else:
+            print("Not found")
+            print("The word introduced must coincide with one of the following one.")
+            print(mylist)
