@@ -32,17 +32,35 @@ def show_recommendations(recommendations, user):
     None.
 
     """
-    taste= input("Introduce what would you like to listen: ")
+     topics=[]
     f=open('data.csv')
     csv_f=csv.reader(f)
-    mylist=[]
     for row in csv_f:
-        if mylist.count(row[9])==0:
-            mylist.append(row[9])
-    for row in csv_f:
-        if row[9]==taste:
-            print("What you are looking for is {} episode {}. ".format(row[7],row[8]))
-        else:
-            print("Not found")
-            print("The word introduced must coincide with one of the following one.")
-            print(mylist)
+        if row[10]==200 or row[10]==206:
+            topics.append(row[9])
+    v=open('observations.csv')
+    csv_v=csv.reader(v)
+    episodes=[]
+    for row_2 in csv_v:
+        if topics.count(row_2[10])!=0:
+            episodes.append(row_2[9])
+    new_episode=[]
+    for i in episodes:
+        if new_episode.count(i)==0:
+            new_episode.append(i)
+    dictionary_episodes={}
+    for j in new_episode:
+        dictionary_episodes["j"]=[episodes.count(j)]
+    organised_dictionary = sorted(dictionary_episodes.items(), key=lambda x: x[1], reverse=True)
+    recommendations_organised=[]
+    for k in organised_dictionary.key():
+        recommendations_organised.append(k)
+    
+    final_recommendations=[]
+    n=0
+    while n<5:
+        final_recommendations.append(recommendations_organised[n])
+        n+=1
+    print("These are the recommendations for you: ")
+    for a in final_recommendations:
+        print("- {}".format(a)
