@@ -218,6 +218,27 @@ def show_stats(stats):
     
     
     #FIXME
+        download_200=0
+    download_206=0
+    bad_method=0
+    bad_status=0
+    bad_format_resource=0
+    bot_detected=0
+    for row in csv_v:
+        if row[10]==200 :
+            download_200+=1
+        elif row[10]==206:
+            download_206+=1
+        elif generate_not_valid_request_message(row)==badmethod: #CMABIAR NOMBRE CUANDO PAZ LO HAGA
+            bad_method+=1
+        elif generate_not_valid_request_message(row)==badstatus:
+            bad_status+=1
+        elif generate_not_valid_request_message(row)==badformatrosource:
+            bad_format_resource+=1
+        elif generate_not_valid_request_message(row)==bot_detected:
+            bot_detected+=1
+    stats={'Download 200':download_200 , 'Download 206' :download_206 , 'Bad Method':bad_method, 'Bad status' :bad_status, 'Bad format reasource': bad_format_resource, 'Bot detected':bot_detected}
+    return stats
     
     
     
