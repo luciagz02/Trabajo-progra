@@ -61,29 +61,16 @@ def is_valid_user_agent(user_agent):
 
 
 def generate_not_valid_request_message(entry):
-    """
-    This is method that given an entry, validates the request and
-    returns the metric error name.
-
-    Parameters
-    ----------
-    entry : TYPE
-        A request.
-
-    Returns
-    -------
-    string
-        Depending on the validation, the method shall return a metric name
-        for the error:
-            "Bad method",
-            "Bad status",
-            "Bad format resource"
-            "Bot detected",
-            "NA" (if unknown)
-
-    """
-    #FIXME
-    return False
+    if is_valid_method(entry["method"])==False:
+        return "Bad method"
+    elif is_valid_status(entry["status"])==False:
+        return "Bad status"
+    elif is_valid_resource(entry["uri_episode"])==False:
+        return "Bad format resource"
+    elif is_valid_user_agent(entry["user_agent"])==False:
+        return "Bot detected"
+    else:
+        return "NA"    
 
 def is_valid_request(entry):
     """
