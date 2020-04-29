@@ -177,6 +177,11 @@ def show_recommendations(recommendations, user):
     
     
     #FIXME
+    user=input("Introduce a valid user: ")
+    if is_valid_user_agent(user):
+        show_recommendations=recommend(observations, episode_set, user)
+    print("Those are your recommendations: ")
+    print(recommendations_for_user)
     
     
     pass
@@ -279,7 +284,18 @@ def list_episodes(observations):
     """
     episodes_set = {}
 
-    #FIXME
+    a=load_dataset(filename="observations.csv")
+    
+    for rows in a:
+        
+        mylist=[]
+        title=rows['episode_title']
+        podcast_topic=rows['podcast_topic']
+        mylist.append(title)
+        mylist.append(podcast_topic)
+        mytuple=tuple(mylist)
+        episodes_set.add(mytuple)
+        mylist.clear()
 
     return episodes_set
 
