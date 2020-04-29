@@ -97,38 +97,15 @@ def is_valid_request(entry):
         return False
 
 def is_download (entry, ongoing_downloads, min_bytes):
-    """
-    This method checks if an input entry in the source dataset can be considered
-    a download (200 or 206). This will happened if the number of bytes transferred 
-    in the entry request are greater or equal to the min number of bytes 
-    for that type of request.
-
-    Parameters
-    ----------
-    entry : request
-        The download entry request.
-    ongoing_downloads : dictionary
-        The ongoing downloads of some type (200 or 206) identified by id and user agent.
-    min_bytes : integer
-        The minimum number of bytes to consider this entry request as a download.
-
-    Returns
-    -------
-    observation : TYPE
-        If it is a new download: a new data item containing all input information, 
-        a metric name "Download 200" or "Download 206".
-        
-        None, otherwise, the entry is registered to accumulate bytes but 
-        no new download is created.
-
-    """
-    #FIXME
-
-
-
-
-
-    return None
+    un_id=entry["id"]+entry["user_agent"]+entry["uri_episode"]
+    if un_id in ongoing_downloads:
+        if ongoing_downloads[un_id]!="Download "+str(entry["status"]:
+            ongoing_dowloads[un_id]=ongoing_dowloads[un_id]+entry["bytes"]   
+            if ongoing_downloads[un_id]>=min_bytes:
+                ongoing_dowloads[un_id]="Download "+str(entry["status"])
+                return "Download "+str(entry["status"])
+    else:
+        ongoing_dowloads[un_id]=entry["bytes"]     
 
 def create_error_observation(metric, uri_episode):
     observation = None
