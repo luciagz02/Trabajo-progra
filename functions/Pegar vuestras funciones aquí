@@ -177,7 +177,7 @@ def show_recommendations(recommendations, user):
     if is_valid_user_agent(user):
         show_recommendations=recommend(observations, episode_set, user)
     print("Those are your recommendations: ")
-    print(show_recommendations=r)
+    print(show_recommendations)
     
     
     pass
@@ -273,14 +273,8 @@ def list_episodes(observations):
     
     for rows in a:
         
-        mylist=[]
-        title=rows['episode_title']
-        podcast_topic=rows['podcast_topic']
-        mylist.append(title)
-        mylist.append(podcast_topic)
-        mytuple=tuple(mylist)
-        episodes_set.add(mytuple)
-        mylist.clear()
+    mytuple=(observations['episode_title'],observations['podcast_topic'])
+    episodes_set.add(mytuple)
 
     return episodes_set
 
@@ -355,6 +349,20 @@ def recommend(observations, episode_set, user="df273cf4-d335-4b7f-b979-17212e8b8
     #Sort candidate episodes downloads
     #Select the first 5
     return recommendations
+    topic=observations['podcast_topic']
+    for topics in episode_set:
+        episodes_topics=[]
+        if topic==topics[2]:
+            episodes_topics.append(topics[1])
+    episode_entries=map_top_episodes(observations)
+    for episode in episodes_topics:
+        download=episode_entries.get("i")
+        episodes_tdownload={'episode':download}
+    episodes_tdownload_sorted = sorted(episodes_tdownload.items(), key=lambda x: x[1], reverse=True)
+    while len(recommendations)<5:
+        for k,v in episodes_tdownload_sorted.item():
+            recommendations.append(k)
+    return recommendations
  
 
 
@@ -379,12 +387,12 @@ def map_top_episodes(observations):
   
     #FIXME
     episodes_download=[]
-    if observations['id']+observations['user_id']+observations['uri_episodes']==un_id:
+    if observations['metric']=='Download 200' or observation['metric']=='Download 206' :
         episodes_download.append(observations['episode_title'])
     for title in episodes_download:
     
         n_download=episode_entries.count('title')
-        episodes_entries={'title': n_download}
+        episode_entries={'title': n_download}
     
   
     return episode_entries
