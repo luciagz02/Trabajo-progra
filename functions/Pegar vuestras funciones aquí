@@ -98,14 +98,26 @@ def is_valid_request(entry):
 
 def is_download (entry, ongoing_downloads, min_bytes):
     un_id=entry["id"]+entry["user_agent"]+entry["uri_episode"]
+    n_bytes=int(entry["bytes"])
     if un_id in ongoing_downloads:
-        if ongoing_downloads[un_id]!="Download "+str(entry["status"]:
-            ongoing_dowloads[un_id]=ongoing_dowloads[un_id]+entry["bytes"]   
-            if ongoing_downloads[un_id]>=min_bytes:
-                ongoing_dowloads[un_id]="Download "+str(entry["status"])
-                return "Download "+str(entry["status"])
+        if ongoing_downloads[un_id]!="Download "+str(entry["status"]):
+            ongoing_downloads[un_id]=ongoing_downloads[un_id]+n_bytes   
     else:
-        ongoing_dowloads[un_id]=entry["bytes"]     
+        ongoing_downloads[un_id]=n_bytes  
+    if (type(ongoing_downloads[un_id]) is int) and ongoing_downloads[un_id]>=min_bytes:
+        ongoing_downloads[un_id]="Download "+str(entry["status"])
+        observation={}
+        observation["un_id"]=un_id
+        observation["metric"]="Download "+str(entry["status"])
+        observation["value"]=1
+        for k,v in entry.items():
+            if k=="id" or k=="user_agent":
+                pass
+            else:    
+                observation[k]=v
+        return observation
+    else:
+        return None         
 
 def create_error_observation(metric, uri_episode):
     observation = None
@@ -555,14 +567,14 @@ def analyze_dataset(data_entries):
             
             #It uses an object for observations, if you use another 
             #datastructure, adapt the code
-            if observation and observation.id not in ongoing_observations:
-                ongoing_observations[observation.id] = observation
+            if observation and observation["un_id"] not in ongoing_observations:
+                ongoing_observations[observation["un_id"]] = observation
    
         else:
             invalid_message = generate_not_valid_request_message(entry)
             observation = create_error_observation(invalid_message, entry["uri_episode"])
             if observation:
-                ongoing_observations[observation.id] = observation
+                ongoing_observations[observation["un_id"]] = observation
   
     return list(ongoing_observations.values())
 
