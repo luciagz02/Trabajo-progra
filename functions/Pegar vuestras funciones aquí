@@ -165,7 +165,7 @@ def show_recommendations(recommendations, user):
     if is_valid_user_agent(user):
         show_recommendations=recommend(observations, episode_set, user)
     print("Those are your recommendations: ")
-    print(recommendations_for_user)
+    print(show_recommendations=r)
     
     
     pass
@@ -194,27 +194,10 @@ def show_stats(stats):
     
     
     #FIXME
-        download_200=0
-    download_206=0
-    bad_method=0
-    bad_status=0
-    bad_format_resource=0
-    bot_detected=0
-    for row in csv_v:
-        if row[10]==200 :
-            download_200+=1
-        elif row[10]==206:
-            download_206+=1
-        elif generate_not_valid_request_message(row)==badmethod: #CMABIAR NOMBRE CUANDO PAZ LO HAGA
-            bad_method+=1
-        elif generate_not_valid_request_message(row)==badstatus:
-            bad_status+=1
-        elif generate_not_valid_request_message(row)==badformatrosource:
-            bad_format_resource+=1
-        elif generate_not_valid_request_message(row)==bot_detected:
-            bot_detected+=1
-    stats={'Download 200':download_200 , 'Download 206' :download_206 , 'Bad Method':bad_method, 'Bad status' :bad_status, 'Bad format reasource': bad_format_resource, 'Bot detected':bot_detected}
-    return stats
+    a=generate_stats(observations)
+    print("We are charging your stats wait a moment")
+    print("Charging...")
+    print(a)
     
     
     
@@ -237,7 +220,13 @@ def show_top_k(top_k):
     """
     
     #FIXME
-    
+    k=int(input("Introduce a number."))
+    if k==0 and k<0 and k>len(all_top_programs):
+        print("Introduce a valid number.")
+        return show_top_k
+    else:
+        a=list_top_k_programs(all_top_programs, k)
+        print(a)
     
     
     
@@ -430,6 +419,13 @@ def list_top_programs(observations):
     all_top_programs = []
   
     #FIXME
+    programs_download=[]
+    if observations['metric']=='Download 200' or observations['metric']=='Download 206':
+        programs_download.append(observations['podcast_title'])
+    for program in programs_download:
+        n_download=progrmas_entries.count('program')
+        mytuple=(program, n_download)
+        all_top_episodes.append(mytuple)
   
     
     return all_top_programs
@@ -454,6 +450,12 @@ def list_top_k_programs(all_top_programs, k):
     top_k = []
  
     #FIXME
+    a=list_top_programs(observations)
+    top_k_2=[]
+    for i in range(k):
+        top_k_2.append(a[i])
+
+    top_k=top_k_2.sort(key=lambda top_k_programs: top_k_programs[1], reverse=True)
     
     return top_k    
 
@@ -486,6 +488,25 @@ def generate_stats(observations):
   
     
     #FIXME
+    download_200=0
+    download_206=0
+    bad_method=0
+    bad_status=0
+    bad_format_resource=0
+    bot_detected=0
+    if generate_not_valid_request_message(observations)== 'Bad Method':
+        bad_method+=1
+    if generate_not_valid_request_message(observations)== 'Bad Status':
+        bad_status+=1
+    if generate_not_valid_request_message(observations)== 'Bad Format Resource':
+        bad_format_resource+=1
+    if generate_not_valid_request_message(observations)== 'Bot Detected':
+        bot_detected+=1
+    if observations['metric']==download_200:
+        download_200+=1
+    if observations['metric']==download_206:
+        download_206+=1
+    
     
   
     
