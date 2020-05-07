@@ -86,3 +86,22 @@ ax1.plot([0,10,20,30,40], [0.60,1.21,2.31,4.19,7.28], color = 'r')
 plt.show()
 
 
+###Lim
+#This method allows us to establish a limit value for either x or y. This means that, for example, if x was defined from 0 to 1000,
+but in our program (or plot) we want to limit it so that it goes from 2-32, we could do so just by introducing this method.
+
+import matplotlib.pyplot as plt
+import numpy as np
+import math as mt
+
+l = np.arange(0,20,3)
+fig = plt.figure()
+ax = fig.add_axes([0,0,1,1])
+np.vectorize(l)
+n = np.log(np.abs(x))
+ax.plot(l, n, color ='g')
+
+plt.ylim(0,10)
+plt.show()
+
+
