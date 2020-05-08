@@ -74,22 +74,25 @@ fig = plt.figure()
 ax = fig.add_axes([0,0,1,1])
 ax.plot([2010,2011,2012,2013,2014,2015,2016,2017,2018], [56,51,63,58,51,65,51,70,65])
 plt.xlabel("Year")
-
 ax1 =ax.twinx()
 ax1.plot([2010,2011,2012,2013,2014,2015,2016,2017,2018], [20,10,50,25,12,55,10,60,55], color = 'r')
 fig.legend(labels = ('Weight','Sweets eaten (in thousands)'), loc= 'upper left')
-
 plt.show()
 
-#in this other example, we can see another interesting plot, as we have represented temperature(ºC) in the x-axis,
-vapor pressure in mmHg in the left y-axis and vapor pressure in atm in the right y-axis.
-However, as the values found on the two y-axes are proportional, the resulting traces ore overlapped.
+
+#in this other example, we can see another interesting plot, as the values found on the two y-axes are proportional, 
+the resulting traces ore overlapped.
+import matplotlib.pyplot as plt
 fig = plt.figure()
 ax = fig.add_axes([0,0,1,1])
 ax.plot([0,10,20,30,40], [4.58,9.21,17.54,31.82,55.32])
+plt.xlabel("Temperature (ºC)")
 ax1 =ax.twinx()
 ax1.plot([0,10,20,30,40], [0.60,1.21,2.31,4.19,7.28], color = 'r')
+fig.legend(labels = ('Vapor pressure in mmHg','Vapor pressure in atm'), loc= 'upper left')
 plt.show()
+
+
 
 
 ###Lim
