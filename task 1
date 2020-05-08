@@ -66,16 +66,22 @@ for radian in rads:
     
     
 ###Twin
-#This method allows us to plot different values in axis y with respect to the same values represented in axis x.
+#This method allows us to plot different values in axis y with respect to the same values represented in axis x. This helps us see how 
+two different variables vary with respect to the another.
+import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt
 fig = plt.figure()
 ax = fig.add_axes([0,0,1,1])
-ax.plot([2,4,6,8,10], [1,3,5,7,9], color ='r')
+ax.plot([2010,2011,2012,2013,2014,2015,2016,2017,2018], [56,51,63,58,51,65,51,70,65])
+plt.xlabel("Year")
+
 ax1 =ax.twinx()
-ax1.plot([2,4,6,8,10], [50,40,30,20,10])
+ax1.plot([2010,2011,2012,2013,2014,2015,2016,2017,2018], [20,10,50,25,12,55,10,60,55], color = 'r')
+fig.legend(labels = ('Weight','Sweets eaten (in thousands)'), loc= 'upper left')
+
 plt.show()
 
-#in this other example, we can see a more interesting plot, as we have represented temperature(ºC) in the x-axis,
+#in this other example, we can see another interesting plot, as we have represented temperature(ºC) in the x-axis,
 vapor pressure in mmHg in the left y-axis and vapor pressure in atm in the right y-axis.
 However, as the values found on the two y-axes are proportional, the resulting traces ore overlapped.
 fig = plt.figure()
