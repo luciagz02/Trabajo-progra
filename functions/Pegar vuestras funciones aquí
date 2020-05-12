@@ -259,14 +259,10 @@ def list_episodes(observations):
     """
     episodes_set = {}
 
-    a=load_dataset(filename="observations.csv")
-    
-    for rows in a:
-        
-    mytuple=(observations['episode_title'],observations['podcast_topic'])
-    episodes_set.add(mytuple)
-
-    return episodes_set
+    for observation in observations:
+        mytuple=(observation['episode_title'],observation['podcast_topic'])
+        episode_set.add(mytuple)
+    return episode_set
 
     
 
