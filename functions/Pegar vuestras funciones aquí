@@ -121,7 +121,6 @@ def is_download (entry, ongoing_downloads, min_bytes):
 
 def create_error_observation(metric, uri_episode):
    
-        
     """
     This method creates an observation error.
 
@@ -138,15 +137,11 @@ def create_error_observation(metric, uri_episode):
         DESCRIPTION.
 
     """
-    #FIXME
-    
-    #Example with an object
-    observation = None
-    #observation = Observation()
-    #observation.id = str(uuid.uuid4()) #Generate unique ids
-    #observation.value = 1
-    #observation.metric = metric
-    #observation.uri_episode = uri_episode
+    un_id = str(uuid.uuid4())
+    observation={}
+    observation["un_id"]=un_id
+    observation["metric"]=metric
+    observation["uri_episode"]=uri_episode
     return observation
 
 def show_recommendations(recommendations, user):
