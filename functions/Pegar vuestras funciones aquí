@@ -120,12 +120,7 @@ def is_download (entry, ongoing_downloads, min_bytes):
         return None         
 
 def create_error_observation(metric, uri_episode):
-    observation = None
-    if is_valid_request(entry)==False:
-        observation=generate_not_valid_request_message(entry) + ", Episode: "+ entry["uri_episode"]
-    else:
-        observation=observation
-    return observation
+   
         
     """
     This method creates an observation error.
