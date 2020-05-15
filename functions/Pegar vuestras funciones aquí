@@ -141,6 +141,7 @@ def create_error_observation(metric, uri_episode):
     observation={}
     observation["un_id"]=un_id
     observation["metric"]=metric
+    observation["value"]=0
     observation["uri_episode"]=uri_episode
     return observation
 
