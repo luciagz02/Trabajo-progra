@@ -141,7 +141,6 @@ def create_error_observation(metric, uri_episode):
     observation={}
     observation["un_id"]=un_id
     observation["metric"]=metric
-    observation["value"]=0
     observation["uri_episode"]=uri_episode
     return observation
 
@@ -426,13 +425,22 @@ def list_top_programs(observations):
     all_top_programs = []
   
     #FIXME
+    all_top_progdict={}
     programs_download=[]
-    if observations['metric']=='Download 200' or observations['metric']=='Download 206':
-        programs_download.append(observations['podcast_title'])
-    for program in programs_download:
-        n_download=progrmas_entries.count('program')
-        mytuple=(program, n_download)
-        all_top_episodes.append(mytuple)
+    for observation in observations:
+        if  observation['metric']=='Download 200' or observation['metric']=='Download 206':
+            programs_download.append(observation['podcast_title'])
+            title=observation['podcast_title']
+            if title  in all_top_progdict:
+                all_top_progdict['title']+=1
+            else:
+                all_top_progdict['title']=1
+                
+    all_top_programs=[]
+    for  k,v in all_top_progdict.item():
+        mytuple=(k,v)
+        all_top_programs.append(mytuple)
+    all_top_programs=Sort_Tuple(all_top_programs)
   
     
     return all_top_programs
@@ -455,14 +463,9 @@ def list_top_k_programs(all_top_programs, k):
 
     """
     top_k = []
- 
-    #FIXME
-    a=list_top_programs(observations)
-    top_k_2=[]
-    for i in range(k):
-        top_k_2.append(a[i])
-
-    top_k=top_k_2.sort(key=lambda top_k_programs: top_k_programs[1], reverse=True)
+    for i in range(0,k):
+        program=all_top_programs(i)
+        top_k.append(program)
     
     return top_k    
 
@@ -501,18 +504,20 @@ def generate_stats(observations):
     bad_status=0
     bad_format_resource=0
     bot_detected=0
-    if generate_not_valid_request_message(observations)== 'Bad Method':
-        bad_method+=1
-    if generate_not_valid_request_message(observations)== 'Bad Status':
-        bad_status+=1
-    if generate_not_valid_request_message(observations)== 'Bad Format Resource':
-        bad_format_resource+=1
-    if generate_not_valid_request_message(observations)== 'Bot Detected':
-        bot_detected+=1
-    if observations['metric']==download_200:
-        download_200+=1
-    if observations['metric']==download_206:
-        download_206+=1
+    for observation in observations:
+         if generate_not_valid_request_message(observation)== 'Bad Method':
+             bad_method+=1
+         if generate_not_valid_request_message(observation)== 'Bad Status':
+             bad_status+=1
+         if generate_not_valid_request_message(observation)== 'Bad Format Resource':
+             bad_format_resource+=1
+         if generate_not_valid_request_message(observation)== 'Bot Detected':
+             bot_detected+=1
+         if observation['metric']==download_200:
+             download_200+=1
+         if observation['metric']==download_206:
+             download_206+=1
+    stats={'Download_200':download_200, 'Download_206':download_206, 'Bad_Method':bad_method, 'Bad_status':bad_status,'Bad_Format_Resource':bad_format_resource, 'Bot_Detected':bot_detected}
     
     
   
