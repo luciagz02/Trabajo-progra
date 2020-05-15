@@ -111,7 +111,7 @@ def is_download (entry, ongoing_downloads, min_bytes):
         observation["metric"]="Download "+str(entry["status"])
         observation["value"]=1
         for k,v in entry.items():
-            if k=="id" or k=="user_agent":
+            if k=="user_agent":
                 pass
             else:    
                 observation[k]=v
