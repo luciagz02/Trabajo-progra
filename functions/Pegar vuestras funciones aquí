@@ -339,20 +339,25 @@ def recommend(observations, episode_set, user="df273cf4-d335-4b7f-b979-17212e8b8
        #Optional: filter the episodes that have been already seen by the user
     #Sort candidate episodes downloads
     #Select the first 5
-    return recommendations
-    topic=observations['podcast_topic']
-    for topics in episode_set:
-        episodes_topics=[]
-        if topic==topics[2]:
-            episodes_topics.append(topics[1])
-    episode_entries=map_top_episodes(observations)
-    for episode in episodes_topics:
-        download=episode_entries.get("i")
-        episodes_tdownload={'episode':download}
-    episodes_tdownload_sorted = sorted(episodes_tdownload.items(), key=lambda x: x[1], reverse=True)
-    while len(recommendations)<5:
-        for k,v in episodes_tdownload_sorted.item():
-            recommendations.append(k)
+    for observation in observations:
+        if observation['id']=="user":
+            topic=observation['podcast_topic']
+    episodes_topic=[]
+    for i in range(0,len(episode_set)):
+        mytuple=episode_set[i]
+        if mytuple[1]==topic:
+            episodes_topic.append(mytuple[0])
+    episode_downloaded=[]
+    for observation_2 in observations:
+        if observation_2['metric']=='Download_200' or observation_2['metric']=='Download_206':
+            episode_downloaded.append(observation_2['episode_title'])
+    recommendations_2=[]
+    for k in episodes_topic:
+        if k in episode_downloaded:
+            n_download=episode_downloaded.count(k)
+            mytuple_2=(k,n_download)
+            recommendations_2.append(mytuple_2)
+    recommendations=Sort_Tuple(recommendations_2)
     return recommendations
  
 
