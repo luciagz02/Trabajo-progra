@@ -286,14 +286,19 @@ def save_observations_as_csv(observations, filename="observations.csv"):
 
     """
     
+    file=open(filename,"w")
+    keys=[]
+    for i in observations[0].keys():
+        keys.append(i)
+    for k in keys:
+        file.write(k+",")
+    file.write("\n")
+    for j in range(len(observations)):
+        for i in observations[j].keys():
+            file.write(observations[j][i]+",")
+        file.write("\n")    
+    file.close()    
     
-    
-    #FIXME
-    
-    
-    
-    pass
-
 
 def recommend(observations, episode_set, user="df273cf4-d335-4b7f-b979-17212e8b84d3"):
     """
