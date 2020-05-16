@@ -383,12 +383,13 @@ def map_top_episodes(observations):
   
     #FIXME
     episodes_download=[]
-    if observations['metric']=='Download 200' or observation['metric']=='Download 206' :
-        episodes_download.append(observations['episode_title'])
+    for observation in observations:
+        if observation['metric']=='Download 200' or observation['metric']=='Download 206' :
+            episodes_download.append(observations['episode_title'])
     for title in episodes_download:
-    
         n_download=episode_entries.count('title')
         episode_entries={'title': n_download}
+  
     
   
     return episode_entries
