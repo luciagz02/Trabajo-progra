@@ -259,9 +259,10 @@ def list_episodes(observations):
     """
     episodes_set = {}
 
-    for observation in observations:
-        mytuple=(observation['episode_title'],observation['podcast_topic'])
-        episode_set.add(mytuple)
+        for observation in observations:
+        if observation['metric']=="Download_200" or observation['metric']=="Download_206":
+            mytuple=(observation['episode_title'],observation['podcast_topic'])
+            episodes_set.add(mytuple)
     return episode_set
 
     
@@ -339,13 +340,15 @@ def recommend(observations, episode_set, user="df273cf4-d335-4b7f-b979-17212e8b8
        #Optional: filter the episodes that have been already seen by the user
     #Sort candidate episodes downloads
     #Select the first 5
+    topic=[]
     for observation in observations:
         if observation['id']=="user":
-            topic=observation['podcast_topic']
+            topic.append(observation['podcast_topic'])
     episodes_topic=[]
-    for i in range(0,len(episode_set)):
-        mytuple=episode_set[i]
-        if mytuple[1]==topic:
+    for t in topic:
+         for i in range(0,len(episode_set)):
+          mytuple=episode_set[i]
+          if mytuple[1]==t:
             episodes_topic.append(mytuple[0])
     episode_downloaded=[]
     for observation_2 in observations:
