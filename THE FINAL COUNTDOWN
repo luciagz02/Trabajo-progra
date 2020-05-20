@@ -178,7 +178,7 @@ def show_recommendations(recommendations, user):
     
 
     if is_valid_user_agent(user):
-        n=int(input("Introduce the number of recommendations you want number: "))
+        n=int(input("Introduce the number of recommendations you want : "))
         print("*Those are your recommendations: ")
         print("\n")
         recommendations=recommend(observations, episode_set, user)
