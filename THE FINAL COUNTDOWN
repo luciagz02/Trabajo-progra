@@ -176,21 +176,28 @@ def show_recommendations(recommendations, user):
     
     #FIXME
     
-    n=int(input("Introduce a number: "))
-   
+
     if is_valid_user_agent(user):
-        print("Those are your recommendations: ")
+        n=int(input("Introduce the number of recommendations you want number: "))
+        print("*Those are your recommendations: ")
         print("\n")
         recommendations=recommend(observations, episode_set, user)
-        for j in range(0,n):
-            recommendation=recommendations[j]
-            print(recommendation[0])
-            print("\n ")
-    
-    
-    
-    
-    
+        
+        k=0
+        if n>len(recommendations) or n<=0:
+            print("Not valid number")
+        else:
+            while k<n:
+                recommended=recommendations[k]
+                print("\t""-"+recommended[0])
+                print("\n")
+                k+=1
+    else:
+        print("\n")
+        print("That is not a valid user.")
+            
+    print("\n") 
+
     pass
         
 def show_stats(stats):
@@ -218,12 +225,11 @@ def show_stats(stats):
     
     #FIXME
     a=generate_stats(observations)
-    print("We are charging your stats wait a moment")
-    print("Charging...")
-    print(a)
-    
-    
-    
+    print("*Those are the stats: ")
+    for k,v in a.items():
+        print("\n")
+        print("\t""-{}:{}".format(k,v))
+    print("\n")
     
     pass
  
@@ -249,10 +255,14 @@ def show_top_k(top_k):
         return show_top_k
     else:
         a=list_top_k_programs(all_top_programs, k)
-        print(a)
-    
-    
-    
+        print("*The top programs are:")
+        for i in range(0,k):
+            print("\n")
+            programs=a[i]
+            print("\t""-{} with {} downloads".format(programs[0],programs[1]))
+    print("\n")
+        
+
     pass
 
 def get_number (threshold):
@@ -322,7 +332,7 @@ def save_observations_as_csv(observations, filename="observations.csv"):
     file.close()    
     
 
-def recommend(observations, episode_set, user="df273cf4-d335-4b7f-b979-17212e8b84d3"):
+def recommend(observations, episode_set, user="1-d335-4b7f-b979-17212e8b84d3"):
     """
     Given the observations, entries processed, the episode set, and a user,
     it gives a recommendation of 5 episodes.
@@ -383,6 +393,7 @@ def recommend(observations, episode_set, user="df273cf4-d335-4b7f-b979-17212e8b8
             mytuple_2=(k,n_download)
             recommendations_2.append(mytuple_2)
     recommendations=Sort_Tuple(recommendations_2)
+    
     
     return recommendations
  
